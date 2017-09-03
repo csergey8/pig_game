@@ -31,12 +31,36 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
   diceDOM.src = 'dice-' + dice + '.png';
 
 
-  if(dice !== 1){
-  roundScore = roundScore + dice;
+  if (dice !== 1) {
+    roundScore += dice;
     document.querySelector('#current-' + activePlayer).textContent = roundScore;
   } else {
-    activePlayer++;
+    nextPlayer();
   }
-
-
 });
+
+
+
+document.querySelector('.btn-hold').addEventListener('click', function () {
+  score[activePlayer] += roundScore;
+  document.querySelector('#score-' + activePlayer).textContent = score[activePlayer];
+  if (score[activePlayer] > 20) {
+    document.querySelector('#name-' + activePlayer).textContent = 'Winner';
+    document.querySelector('.dice').style.display = 'none';
+    Document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+    Document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+  } else {
+    nextPlayer();
+  }
+});
+
+
+function nextPlayer() {
+  roundScore = 0;
+  activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+  document.getElementById('current-0').textContent = '0';
+  document.getElementById('current-1').textContent = '0';
+  document.querySelector('.player-0-panel').classList.toggle('active');
+  document.querySelector('.player-1-panel').classList.toggle('active');
+  //document.querySelector('.dice').style.display = 'none';
+}
